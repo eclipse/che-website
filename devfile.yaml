@@ -2,17 +2,13 @@
 apiVersion: 1.0.0
 metadata:
    generateName: che-website-
-
+attributes:
+  persistVolumes: 'false'
+  
 components:
-  - alias: git
-    type: dockerimage
-    image: sunix/git-devtools
-    mountSources: true
-    memoryLimit: 256M
-
   - alias: php
     type: dockerimage
-    image: eclipse/php
+    image: quay.io/ibuziuk/php
     mountSources: true
     memoryLimit: 256M
     args: ['sleep', 'infinity']
@@ -21,9 +17,6 @@ components:
         port: 80
         attributes:
           path: /che/
-
-  - id: ms-vscode/vscode-github-pullrequest/latest
-    type: chePlugin
 
 commands:
 
@@ -35,5 +28,3 @@ commands:
           service apache2 start && tail -f /var/log/apache2/access.log -f /var/log/apache2/error.log
         component: php
         workdir: /projects/
-
-
